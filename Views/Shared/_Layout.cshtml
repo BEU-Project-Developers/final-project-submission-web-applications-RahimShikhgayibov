@@ -1,0 +1,105 @@
+﻿
+<body>-
+
+	<div class="super_container">
+
+		<!-- Header -->
+
+		<header class="header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<div class="header_content d-flex flex-row align-items-center justify-content-start">
+							<div class="logo">
+								<a href="#">
+									<div>The Venue</div>
+									<div>restaurant</div>
+								</a>
+							</div>
+							<nav class="main_nav">
+								<ul class="d-flex flex-row align-items-center justify-content-start">
+									<li><a asp-controller="Home" asp-action="Index">home</a></li>
+									<li><a asp-controller="About" asp-action="Index">about us</a></li>
+									<li><a asp-controller="Menu" asp-action="Index">menu</a></li>
+									<li><a asp-controller="About" asp-action="Delivery">delivery</a></li>
+									<li><a asp-controller="Blog" asp-action="Index">blog</a></li>
+									<li><a asp-controller="Contact" asp-action="Index">contact</a></li>
+								</ul>
+							</nav>
+
+							<div class="ml-auto d-flex align-items-center">
+								<div class="reservations_phone mr-3">Reservations: +994 55 992 80 05</div>
+
+								@* Authentication Controls *@
+								@if (User.Identity.IsAuthenticated)
+								{
+									<form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+										<button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+									</form>
+								}
+								else
+								{
+									<a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-sm mr-2">Login</a>
+									<a asp-controller="Account" asp-action="Register" class="btn btn-light btn-sm">Register</a>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+
+
+@RenderBody();
+
+
+		<!-- Footer -->
+
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+
+					<!-- Footer Logo -->
+					<div class="col-lg-3 footer_col">
+						<div class="footer_logo">
+							<div class="footer_logo_title">The Venue</div>
+							<div class="footer_logo_subtitle">restaurant</div>
+						</div>
+						
+					</div>
+
+					<!-- Footer About -->
+					<div class="col-lg-6 footer_col">
+						<div class="footer_about">
+							<p>The Venue is more than just a restaurant—it’s a place where flavors come to life. Whether you're craving a hearty meal, a fine-dining experience, or a cozy brunch, our doors are always open to welcome you. Join us for a taste of culinary perfection and let us make your moments special.</p>
+						</div>
+					</div>
+
+					<!-- Footer Contact -->
+					<div class="col-lg-3 footer_col">
+						<div class="footer_contact">
+							<ul>
+								<li class="d-flex flex-row align-items-start justify-content-start">
+									<div><div class="footer_contact_title">Address:</div></div>
+									<div class="footer_contact_text">481 Creekside Lane Avila CA 93424</div>
+								</li>
+								<li class="d-flex flex-row align-items-start justify-content-start">
+									<div><div class="footer_contact_title">Phone:</div></div>
+									<div class="footer_contact_text">+994 55 992 80 05</div>
+								</li>
+								<li class="d-flex flex-row align-items-start justify-content-start">
+									<div><div class="footer_contact_title">Email:</div></div>
+									<div class="footer_contact_text">venueSumqayit@gmail.com</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+
+</body>
+</html>
