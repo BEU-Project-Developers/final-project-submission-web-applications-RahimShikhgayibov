@@ -1,0 +1,532 @@
+﻿@model EditUserViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İstifadəçi Redaktə Et - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --dark-glass: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="400" cy="700" r="120" fill="url(%23a)"/></svg>');
+                animation: float 20s ease-in-out infinite;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        @@keyframes float {
+            0%, 100%
+
+        {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-20px) rotate(180deg);
+        }
+
+        }
+
+        .edit-container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .edit-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transition: left 0.5s;
+            }
+
+            .edit-card:hover::before {
+                left: 100%;
+            }
+
+        .card-header-custom {
+            background: var(--dark-glass);
+            padding: 30px;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+            .card-header-custom h2 {
+                color: white;
+                font-weight: 700;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+                font-size: 1.8rem;
+            }
+
+            .card-header-custom .subtitle {
+                color: rgba(255, 255, 255, 0.8);
+                margin-top: 10px;
+                font-size: 1rem;
+            }
+
+        .card-body-custom {
+            padding: 40px;
+        }
+
+        .form-floating-glass {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+            .form-floating-glass > .form-control {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 12px;
+                color: white;
+                height: 60px;
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+                padding: 20px 15px 5px 15px;
+            }
+
+                .form-floating-glass > .form-control:focus {
+                    background: rgba(255, 255, 255, 0.15);
+                    border-color: rgba(255, 255, 255, 0.4);
+                    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+                    color: white;
+                    outline: none;
+                }
+
+            .form-floating-glass > label {
+                color: rgba(255, 255, 255, 0.7);
+                padding: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .form-floating-glass > .form-control:focus ~ label,
+            .form-floating-glass > .form-control:not(:placeholder-shown) ~ label {
+                transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .form-floating-glass > .form-control::placeholder {
+                color: transparent;
+            }
+
+        .roles-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+            .roles-section h5 {
+                color: white;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+        .role-checkbox {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+            .role-checkbox:hover {
+                background: rgba(255, 255, 255, 0.15);
+                transform: translateY(-2px);
+            }
+
+            .role-checkbox.checked {
+                background: var(--secondary-gradient);
+                border-color: transparent;
+            }
+
+            .role-checkbox input[type="checkbox"] {
+                margin-right: 12px;
+                transform: scale(1.2);
+            }
+
+            .role-checkbox label {
+                color: white;
+                font-weight: 500;
+                margin: 0;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+        .btn-glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: white;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-glass::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .btn-glass:hover::before {
+                left: 100%;
+            }
+
+            .btn-glass:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                color: white;
+            }
+
+        .btn-primary-glass {
+            background: var(--secondary-gradient);
+            border: none;
+        }
+
+        .btn-secondary-glass {
+            background: var(--dark-glass);
+            border: 1px solid var(--glass-border);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .text-danger {
+            color: #ff6b6b !important;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .validation-summary-errors {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+            .validation-summary-errors ul {
+                margin: 0;
+                padding-left: 20px;
+                color: #ff6b6b;
+            }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @@media (max-width: 768px) {
+            .edit-container
+
+        {
+            padding: 10px;
+        }
+
+        .card-header-custom {
+            padding: 20px;
+        }
+
+            .card-header-custom h2 {
+                font-size: 1.4rem;
+            }
+
+        .card-body-custom {
+            padding: 20px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-glass {
+            width: 100%;
+            justify-content: center;
+        }
+
+        }
+
+        @@keyframes slideIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .edit-card {
+            animation: slideIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-container">
+        <div class="edit-card">
+            <div class="card-header-custom">
+                <div class="user-avatar">
+                    @(Model.FirstName?.Substring(0, 1).ToUpper() ?? "?")
+                </div>
+                <h2>
+                    <i class="fas fa-user-edit"></i>
+                    İstifadəçi Redaktə Et
+                </h2>
+                <p class="subtitle">@Model.FirstName @Model.LastName məlumatlarını yeniləyin</p>
+            </div>
+
+            <div class="card-body-custom">
+                <form asp-action="EditUser" method="post">
+                    <input asp-for="Id" type="hidden" />
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="validation-summary-errors">
+                            <h6><i class="fas fa-exclamation-triangle me-2"></i>Xətalar:</h6>
+                            <ul>
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating-glass">
+                                <input asp-for="FirstName" class="form-control" placeholder="Ad" />
+                                <label asp-for="FirstName">
+                                    <i class="fas fa-user me-2"></i>Ad
+                                </label>
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating-glass">
+                                <input asp-for="LastName" class="form-control" placeholder="Soyad" />
+                                <label asp-for="LastName">
+                                    <i class="fas fa-user me-2"></i>Soyad
+                                </label>
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating-glass">
+                        <input asp-for="Email" class="form-control" placeholder="E-poçt" />
+                        <label asp-for="Email">
+                            <i class="fas fa-envelope me-2"></i>E-poçt
+                        </label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="roles-section">
+                        <h5>
+                            <i class="fas fa-user-shield"></i>
+                            Rollar
+                        </h5>
+                        @for (int i = 0; i < Model.AllRoles.Count; i++)
+                        {
+                            <div class="role-checkbox @(Model.UserRoles.Contains(Model.AllRoles[i]) ? "checked" : "")"
+                                 onclick="toggleRole(this)">
+                                <label>
+                                    <input class="form-check-input" type="checkbox"
+                                           name="SelectedRoles" value="@Model.AllRoles[i]"
+                                           id="role_@i"
+                                    @(Model.UserRoles.Contains(Model.AllRoles[i]) ? "checked" : "") />
+                                    <i class="fas fa-@(Model.AllRoles[i] == "Admin" ? "shield-alt" : "user")"></i>
+                                    @Model.AllRoles[i]
+                                    @if (Model.AllRoles[i] == "Admin")
+                                    {
+                                        <small class="ms-2 opacity-75">(Tam səlahiyyət)</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="ms-2 opacity-75">(Məhdud səlahiyyət)</small>
+                                    }
+                                </label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="action-buttons">
+                        <a asp-action="Index" class="btn-glass btn-secondary-glass">
+                            <i class="fas fa-arrow-left"></i>
+                            Geri Qayıt
+                        </a>
+                        <button type="submit" class="btn-glass btn-primary-glass">
+                            <i class="fas fa-save"></i>
+                            Dəyişiklikləri Yadda Saxla
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        function toggleRole(element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                element.classList.add('checked');
+            } else {
+                element.classList.remove('checked');
+            }
+        }
+
+        // Add floating particles
+        $(document).ready(function() {
+            createFloatingParticles();
+
+            // Form validation styling
+            $('form').on('submit', function() {
+                const submitBtn = $(this).find('button[type="submit"]');
+                submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Yadda saxlanılır...');
+                submitBtn.prop('disabled', true);
+            });
+        });
+
+        function createFloatingParticles() {
+            const container = document.querySelector('.edit-container');
+
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 60 + 30}px;
+                    height: ${Math.random() * 60 + 30}px;
+                    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                    border-radius: 50%;
+                    top: ${Math.random() * 100}%;
+                    left: ${Math.random() * 100}%;
+                    animation: float ${Math.random() * 12 + 8}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 4}s;
+                    pointer-events: none;
+                    z-index: 0;
+                `;
+                container.appendChild(particle);
+            }
+        }
+
+        // Add smooth transitions for form elements
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿@model List<BlogPost>
+<div class="home">
+	<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="https://i.hizliresim.com/1h4qz3n.jpg" data-speed="0.8"></div>
+	<div class="home_container">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="home_content text-center">
+						<div class="home_subtitle page_subtitle">The Venue</div>
+						<div class="home_title"><h1>Our Blog</h1></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="blog">
+    <div class="container">
+        <div class="row">
+            @foreach (var post in Model)
+            {
+                <div class="col-lg-6 blog_col">
+                    <div class="blog_post">
+                        <div class="blog_post_image_container">
+                            <div class="blog_post_image">
+                                <img src="@Url.Content(post.ImageUrl)" alt="@post.Title" />
+                            </div>
+                            <div class="blog_post_date">
+                                <a href="#">@post.Date.ToString("MMMM dd, yyyy")</a>
+                            </div>
+                        </div>
+                        <div class="blog_post_content">
+                            <div class="blog_post_title">
+                                <a href="@Url.Action("Details", "Blog", new { id = post.Id })">@post.Title</a>
+                            </div>
+                            <div class="blog_post_info">
+                                <ul class="d-flex flex-row align-items-center justify-content-start">
+                                    <li>by <a href="#">@post.Author</a></li>
+                                    <li>in <a href="#">@post.Category</a></li>
+                                    <li><a href="#">@post.CommentCount Comments</a></li>
+                                </ul>
+                            </div>
+                            <div class="blog_post_text">
+                                <p>@post.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

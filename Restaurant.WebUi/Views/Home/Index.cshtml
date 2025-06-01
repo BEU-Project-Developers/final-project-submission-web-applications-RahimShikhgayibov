@@ -1,0 +1,177 @@
+﻿@{
+	ViewData["Title"] = "Home";
+	Layout = "_Layout";
+}	
+@model HomeIndexViewModel
+		<!-- Home -->
+
+		<div class="home">
+			<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="https://i.hizliresim.com/9svqum2.jpg" data-speed="0.8"></div>
+			<div class="home_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="home_content text-center">
+								<div class="home_subtitle page_subtitle">The Venue is</div>
+								<div class="home_title"><h1>An Extraordinery Experience</h1></div>
+								<div class="home_text ml-auto mr-auto">
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. Suspendisse cursus faucibus finibus.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="scroll_icon"></div>
+		</div>
+
+
+<!-- Signature Dish -->
+@if (Model.SignatureDish != null)
+{
+    <div class="sig">
+        <div class="sig_content_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="sig_content">
+                            <div class="sig_subtitle page_subtitle">Signature Dish</div>
+                            <div class="sig_title"><h1>@Model.SignatureDish.Title</h1></div>
+                            <div class="rating_r sig_rating rating_r_5"><i></i><i></i><i></i><i></i><i></i></div>
+                            <div class="sig_name_container d-flex flex-row align-items-start justify-content-start">
+                                <div class="sig_name">@Model.SignatureDish.Title</div>
+                                <div class="sig_price ml-auto">$@Model.SignatureDish.Price</div>
+                            </div>
+                            <div class="sig_content_list">
+                                <ul class="d-flex flex-row align-items-center justify-content-start flex-wrap">
+                                    @foreach (var ingredient in Model.SignatureDish.DishIngredients)
+                                    {
+                                        <li>@ingredient.Ingredient.Name</li>
+                                    }
+                                </ul>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sig_image_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 offset-lg-5">
+                        <div class="sig_image">
+                            <div class="background_image" style="background-image:url('@Model.SignatureDish.ImagePath')"></div>
+                            <img src="@Model.SignatureDish.ImagePath" alt="@Model.SignatureDish.Title">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- The Menu -->
+<div class="themenu">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="themenu_title_bar_container">
+                    <div class="themenu_stars text-center page_subtitle">5 Stars</div>
+                    <div class="themenu_rating text-center">
+                        <div class="rating_r rating_r_5"><i></i><i></i><i></i><i></i><i></i></div>
+                    </div>
+                    <div class="themenu_title_bar d-flex flex-column align-items-center justify-content-center">
+                        <div class="themenu_title">The Menu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row themenu_row">
+            <!-- Starters -->
+            <div class="col-lg-4 themenu_column">
+                <div class="themenu_col">
+                    <div class="themenu_col_title">Starters</div>
+                    <div class="dish_list">
+                        @foreach (var dish in Model.Starters)
+                        {
+                            <div class="dish">
+                                <div class="dish_title_container d-flex flex-xl-row flex-column align-items-start justify-content-start">
+                                    <div class="dish_title">@dish.Title</div>
+                                    <div class="dish_price">$@dish.Price</div>
+                                </div>
+                                <div class="dish_contents">
+                                    <ul class="d-flex flex-row align-items-start justify-content-start flex-wrap">
+                                        @foreach (var ingredient in dish.DishIngredients)
+                                        {
+                                            <li>@ingredient.Ingredient.Name</li>
+                                        }
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Courses -->
+            <div class="col-lg-4 themenu_column">
+                <div class="themenu_col">
+                    <div class="themenu_col_title">Main Courses</div>
+                    <div class="dish_list">
+                        @foreach (var dish in Model.MainCourses)
+                        {
+                            <div class="dish">
+                                <div class="dish_title_container d-flex flex-xl-row flex-column align-items-start justify-content-start">
+                                    <div class="dish_title">@dish.Title</div>
+                                    <div class="dish_price">$@dish.Price</div>
+                                </div>
+                                <div class="dish_contents">
+                                    <ul class="d-flex flex-row align-items-start justify-content-start flex-wrap">
+                                        @foreach (var ingredient in dish.DishIngredients)
+                                        {
+                                            <li>@ingredient.Ingredient.Name</li>
+                                        }
+                                    </ul>
+                                </div>
+                            
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desserts -->
+            <div class="col-lg-4 themenu_column">
+                <div class="themenu_col">
+                    <div class="themenu_col_title">Desserts</div>
+                    <div class="dish_list">
+                        @foreach (var dish in Model.Desserts)
+                        {
+                            <div class="dish">
+                                <div class="dish_title_container d-flex flex-xl-row flex-column align-items-start justify-content-start">
+                                    <div class="dish_title">@dish.Title</div>
+                                    <div class="dish_price">$@dish.Price</div>
+                                </div>
+                                <div class="dish_contents">
+                                    <ul class="d-flex flex-row align-items-start justify-content-start flex-wrap">
+                                        @foreach (var ingredient in dish.DishIngredients)
+                                        {
+                                            <li>@ingredient.Ingredient.Name</li>
+                                        }
+                                    </ul>
+                                </div>
+                        
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+		

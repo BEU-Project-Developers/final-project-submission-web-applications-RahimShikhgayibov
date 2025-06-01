@@ -1,0 +1,126 @@
+﻿<!-- Home -->
+@model AboutIndexViewModel
+
+<div class="home">
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="https://i.hizliresim.com/sg1bwab.jpg" data-speed="0.8"></div>
+    <div class="home_container">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="home_content text-center">
+                        <div class="home_subtitle page_subtitle">The Venue is</div>
+                        <div class="home_title"><h1>About us</h1></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Intro -->
+<div class="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="intro_content">
+                    <div class="intro_subtitle page_subtitle">@Model.AboutInfo.Subtitle</div>
+                    <div class="intro_title"><h2>@Model.AboutInfo.Title</h2></div>
+                    <div class="intro_text">
+                        <p>@Model.AboutInfo.Description</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="intro_image">
+                            <img src="@Url.Content(Model.AboutInfo.ImagePath)" alt="Intro Image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chefs -->
+<div class="chefs">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="section_title_container">
+                    <div class="section_subtitle page_subtitle">@Model.AboutInfo.ChefsSubtitle</div>
+                    <div class="section_title"><h1>@Model.AboutInfo.ChefsTitle</h1></div>
+                </div>
+            </div>
+        </div>
+        <div class="row chefs_text_row">
+            <div class="col-lg-6">
+                <div class="chefs_text">
+                    <p>@Model.AboutInfo.ChefsDescription1</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="chefs_text">
+                    <p>@Model.AboutInfo.ChefsDescription2</p>
+                </div>
+            </div>
+        </div>
+        <div class="row chefs_row row-eq-height">
+            @foreach (var chef in Model.Chefs)
+            {
+                <div class="col-xl-3 col-md-6 chef_col d-flex flex-column align-items-center justify-content-end">
+                    <div class="chef">
+                        <div class="chef_image">
+                            <img src="@Url.Content(chef.ImagePath)" alt="@chef.Name" />
+                        </div>
+                        <div class="chef_content text-center">
+                            <div class="chef_name">@chef.Name</div>
+                            <div class="chef_subtitle">@chef.Role</div>
+            
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials -->
+<div class="testimonials">
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="https://i.hizliresim.com/isldloi.jpg" data-speed="0.8"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <div class="section_title_container">
+                    <div class="section_subtitle page_subtitle">What they say</div>
+                    <div class="section_title"><h1>Testimonials</h1></div>
+                </div>
+            </div>
+        </div>
+        <div class="row testimonials_row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="test_slider_container">
+                    <div class="owl-carousel owl-theme test_slider">
+                        @foreach (var testimonial in Model.Testimonials)
+                        {
+                            <div class="owl-item text-center">
+                                <div class="quote ml-auto mr-auto">
+                                    <img src="@Url.Content("~/thevenue-gh-pages/images/quote.png")" alt="Quote" />
+                                   
+                                </div>
+                                <div class="test_text">
+                                    <p>@testimonial.Message</p>
+                                </div>
+                                <div class="test_info">@testimonial.Author, <span>@testimonial.Role</span></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
